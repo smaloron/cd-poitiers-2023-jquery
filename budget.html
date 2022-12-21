@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budget</title>
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+
+    <script>
+        const financeHistory = [
+            //{ id: 1, description: 'salaire', amount: 3000 }
+        ];
+
+        $(document).ready(function () {
+            // Définition des cibles
+            $form = $("#addMoveForm");
+            $error = $("#error");
+
+            // Par défaut on masque les erreurs
+            $error.hide();
+
+            // Evénement envoi du formulaire
+            $form.submit(function (ev) {
+                // Empêche le rechargement de la page
+                ev.preventDefault();
+
+                // Récupération des données
+                // et traitement pour les placer dans un objet
+                // au format adequat
+                const rawData = $(this).serializeArray();
+                const newMove = { id: new Date().getTime() };
+                for (item of rawData) {
+                    newMove[item.name] = item.value;
+                }
+
+                // Validation des données
+                let errorMessage = '';
+                if (! 'description' in newMove || ! 'amount' in newMove) {
+                    errorMessage = 'La structure de données est incohérente';
+                } else if (!newMove.description || !newMove.amount) {
+                    errorMessage = 'La saisie est incorrecte';
+                }
+
+                if (errorMessage) {
+                    // Ecriture du message d'erreur dans la zone de message
+                    $error.text(errorMessage);
+                    $error.show();
+                } else {
+                    // Ajout de l'objet newMove 
+                    // à la liste des mouvements financiers
+                    $error.hide();
+                    financeHistory.push(newMove);
+                    $(this).trigger('reset');
+                }
+            });
+        });
+
+
+
+
+    </script>
+</head>
+
+<body class="container-md p-4">
+
+    <div class="row">
+        <!-- Solde et historique de mouvements-->
+        <div class="col-md-8">
+
+        </div>
+        <!-- formulaire-->
+        <div class="col-md-4">
+            <h3>Ajouter un mouvement</h3>
+            <div class="alert alert-danger" id="error"></div>
+            <form id="addMoveForm">
+                <div class="mb-3">
+                    <label for="description" class="form-label">
+                        Description</label>
+                    <input type="text" id="description" class="form-control" name="description">
+                </div>
+                <div class="mb-3">
+                    <label for="amount" class="form-label">
+                        Montant</label>
+                    <input type="number" id="amount" class="form-control" name="amount">
+                </div>
+                <button class="btn btn-primary w-100">Valider</button>
+            </form>
+        </div>
+    </div>
+
+</body>
+
+</html>
