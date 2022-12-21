@@ -9,6 +9,12 @@
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
 
+    <style>
+        #template {
+            display: none;
+        }
+    </style>
+
     <script>
         const financeHistory = [
             //{ id: 1, description: 'salaire', amount: 3000 }
@@ -18,9 +24,46 @@
             // Définition des cibles
             $form = $("#addMoveForm");
             $error = $("#error");
+            // clonage du modèle
+            $template = $("#template").clone(true).removeAttr("id");
 
             // Par défaut on masque les erreurs
             $error.hide();
+
+            // Affichage de l'historique
+            showHistory();
+
+
+
+
+            // Affichage de l'historique des mouvements
+            function showHistory () {
+                // définition d'un tbody fantôme
+                const $shadowTbody = $("<tbody></tbody>");
+
+                console.log(financeHistory);
+
+                // Boucle sur les données
+                for (item of financeHistory) {
+                    console.log($template);
+                    // clonage du template
+                    $newItem = $template
+                        .clone(true)
+                        .data("id", item.id);
+                    $newItem.children()
+                        .first()
+                        .text(item.description)
+                        .next().text(item.amount);
+                    console.log($newItem);
+                    // Placement du nouvel élément dans la tbody fantôme
+                    $shadowTbody.append($newItem);
+                }
+
+
+                // Remplacement du tbody existant par le tbody fantôme
+                $("tbody").replaceWith($shadowTbody);
+            }
+
 
             // Evénement envoi du formulaire
             $form.submit(function (ev) {
@@ -54,6 +97,7 @@
                     $error.hide();
                     financeHistory.push(newMove);
                     $(this).trigger('reset');
+                    showHistory();
                 }
             });
         });
@@ -69,6 +113,19 @@
     <div class="row">
         <!-- Solde et historique de mouvements-->
         <div class="col-md-8">
+            <h3>Historique des mouvements</h3>
+
+            <table class="table table-striped" id="history">
+                <tbody>
+                    <tr id="template">
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <button class="btn btn-danger delete">X</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
 
         </div>
         <!-- formulaire-->
