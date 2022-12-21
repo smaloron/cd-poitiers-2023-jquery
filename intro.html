@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery intro</title>
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+
+    <script>
+        // Attente du chargement du DOM 
+        $(document).ready(function () {
+            const $h1 = $("h1");
+            const $listItem = $("li");
+            console.log($h1, $listItem);
+
+            $h1.html("Hello jQuery").hide(500);
+            $listItem.text("acheter du lait");
+
+
+        });
+    </script>
+</head>
+
+<body>
+
+    <h1>Introduction à jQuery</h1>
+    <p>
+        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Maxime ab rem accusantium ducimus odit reprehenderit,
+        voluptatibus, quo natus asperiores eaque sed eius voluptate iusto deserunt neque saepe minima eos? Numquam
+        labore asperiores, voluptates, quod ut quos velit ex voluptatibus eligendi dicta autem pariatur! Perspiciatis
+        corporis, esse pariatur perferendis amet earum.
+    </p>
+
+    <ul>
+        <li>Gestion du DOM</li>
+        <li>Animation</li>
+        <li>Plugins</li>
+    </ul>
+
+</body>
+
+</html>

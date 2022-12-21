@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selectors</title>
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            // Masquer les listes
+            // $("ul").hide();
+
+            // Masquer le premier élément de chaque liste
+            // $("ul li:first-child").hide();
+
+            // Masquer les h2
+            // $("h2").hide();
+
+            // Masquer les framworks et leur titre
+            // $("#languages+h2, #frameworks").hide();
+
+            // Mettre en gras le premier élément de chaque liste
+            $("ul li:first-child").css("font-weight", "bold");
+
+            // Ajouter une étoile après les éléments de classe js
+            $(".js").text(function (index, oldValue) {
+                return oldValue + " *";
+            });
+
+            // Mettre en rouge les liens https
+            $("a[href^='https']").css("color", "red");
+        });
+    </script>
+</head>
+
+<body>
+    <h2>Les langages</h2>
+    <ul id="languages">
+        <li>Java</li>
+        <li class="js">
+            Javascript</li>
+        <li>Python</li>
+    </ul>
+    <h2>Les frameworks</h2>
+    <ul id="frameworks">
+        <li>Spring</li>
+        <li class="js">Angular</li>
+        <li>Django</li>
+    </ul>
+    <a href="https://randomuser.me/">
+        users</a>
+    <a href="https://www.google.fr/">
+        Google</a>
+    <a href="http://www.w3.org/">
+        W3C</a>
+</body>
+
+</html>

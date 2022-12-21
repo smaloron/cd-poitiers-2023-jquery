@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste</title>
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $("li>h3")
+                .css("cursor", "pointer")
+                .click(function () {
+                    $(this).next().toggle(500);
+                });
+        });
+    </script>
+</head>
+
+<body>
+
+    <ul>
+        <li>
+            <h3>Photographes</h3>
+            <ul>
+                <li>
+                    <h3>Américain.es</h3>
+                    <ul>
+                        <li>Vivian Maier</li>
+                        <li>Diane Arbus</li>
+                        <li>Ansel Adams</li>
+                    </ul>
+                </li>
+
+                <li>
+                    <h3>Européen.es</h3>
+                    <ul>
+                        <li>Gerda taro</li>
+                        <li>Sabine Weiss</li>
+                        <li>Edouard Boubat</li>
+                        <li>André Kertész</li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+
+        <li>
+            <h3>Peintres</h3>
+            <ul>
+                <li>Frida Khalo</li>
+                <li>Diego Rivera</li>
+                <li>Pablo Picasso</li>
+            </ul>
+        </li>
+    </ul>
+
+</body>
+
+</html>
