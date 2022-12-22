@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random User</title>
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="lib/bind-to.js"></script>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+
+    <script>
+        $(document).ready(function () {
+            URL = "https://randomuser.me/api?nat=ES&gender=female";
+
+            function showUser (user) {
+                $("#userInfo img").attr("src", user.picture.large)
+                user.title = user.name.title;
+                user.firstName = user.name.first;
+                user.lastName = user.name.last;
+                user.address = user.location.street.number + " "
+                    + user.location.street.name + " "
+                    + user.location.postcode + " "
+                    + user.location.city + " " + user.location.country;
+
+                $("#userInfo").bindTo(user);
+
+                console.log(user)
+            }
+
+            // Appel à l'API
+            fetch(URL)
+                .then(response => response.json())
+                .then(data => showUser(data.results[0]));
+
+
+        });
+    </script>
+
+</head>
+
+<body class="constainer-md p-4">
+
+    <div class="row justify-content-center">
+        <div class="col-md-4 p-3 bg-success" id="userInfo">
+            <div class="col-12 text-center">
+                <img src="">
+            </div>
+            <p class="text-center">
+                <span data-bind-value="title"></span>
+                <span data-bind-value="firstName"></span>
+                <span data-bind-value="lastName"></span>
+            </p>
+            <p class="text-center" data-bind-value="address"></p>
+        </div>
+    </div>
+
+</body>
+
+</html>
