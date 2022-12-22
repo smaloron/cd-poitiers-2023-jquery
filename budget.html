@@ -16,9 +16,11 @@
     </style>
 
     <script>
-        const financeHistory = [
-            //{ id: 1, description: 'salaire', amount: 3000 }
-        ];
+
+        // Récupération des données du localStorage
+        const HISTORY = "history_key"
+        const localHistory = localStorage.getItem(HISTORY);
+        const financeHistory = JSON.parse(localHistory) || [];
 
         $(document).ready(function () {
             // Définition des cibles
@@ -81,6 +83,10 @@
                 $("tbody").replaceWith($shadowTbody);
             }
 
+            function persist () {
+                localStorage.setItem(HISTORY, JSON.stringify(financeHistory));
+            }
+
             $("#history").delegate(".delete", "click", function () {
                 const row = $(this).parent().parent();
                 const id = row.data("id");
@@ -89,7 +95,8 @@
                 const deleteIndex = financeHistory.findIndex(item => item.id == id);
                 financeHistory.splice(deleteIndex, 1);
 
-                console.log(financeHistory);
+                updateBalance();
+                persist();
             });
 
 
@@ -129,6 +136,7 @@
                     $(this).trigger('reset');
                     showHistory();
                     updateBalance();
+                    persist();
                 }
             });
         });
