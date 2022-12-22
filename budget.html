@@ -81,6 +81,17 @@
                 $("tbody").replaceWith($shadowTbody);
             }
 
+            $("#history").delegate(".delete", "click", function () {
+                const row = $(this).parent().parent();
+                const id = row.data("id");
+                row.remove();
+
+                const deleteIndex = financeHistory.findIndex(item => item.id == id);
+                financeHistory.splice(deleteIndex, 1);
+
+                console.log(financeHistory);
+            });
+
 
             // Evénement envoi du formulaire
             $form.submit(function (ev) {
