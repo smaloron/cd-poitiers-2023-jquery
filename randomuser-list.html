@@ -9,6 +9,35 @@
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
     <script src="lib/bind-to.js"></script>
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+
+    <script>
+        const URL = "https://randomuser.me/api?";
+
+        function getUserListFromServer (search) {
+            fetch(URL + search)
+                .then(response => response.json())
+                .then(data => console.log(data));
+        }
+
+        $(document).ready(function () {
+            $("#search").submit(function (ev) {
+                ev.preventDefault();
+                // Récupération de la saisie
+                const formData = $(this).serializeArray();
+
+                // Constitution de la requête
+                // qui doit être transmise au serveur
+                const search = formData.map(item => {
+                    return item.name + "=" + item.value;
+                }).join("&");
+
+                // Envoie des critères de recherche à une fonction 
+                // chargée d'effectuer l'appel asynchrone
+                getUserListFromServer(search);
+
+            });
+        });
+    </script>
 </head>
 
 <body class="container-md">
