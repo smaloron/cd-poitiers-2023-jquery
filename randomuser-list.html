@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="lib/bind-to.js"></script>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+</head>
+
+<body class="container-md">
+
+    <div class="row justify-content-center p-4">
+        <div class="col-md-6">
+            <h3>Critères de recherche</h3>
+            <form id="search">
+                <div>
+                    <label>Genre</label>
+                </div>
+
+                <div class="form-check-inline mb-2">
+                    <input type="radio" class="form-check-input" name="gender" value="female">
+                    <label class="form-check-label">Féminin</label>
+                </div>
+                <div class="form-check-inline mb-4">
+                    <input type="radio" class="form-check-input" name="gender" value="male">
+                    <label class="form-check-label">Masculin</label>
+                </div>
+
+                <div class="mb-2">
+                    <label class="form-label">Nationalité</label>
+                    <select name="nat" class="form-control">
+                        <option value="FR">Française</option>
+                        <option value="GB">Anglaise</option>
+                        <option value="IE">Irlandaise</option>
+                        <option value="ES">Espagnole</option>
+                        <option value="DK">Danoise</option>
+                    </select>
+                </div>
+
+                <div class="mb-2">
+                    <label class="form-label">Nombre de personnes</label>
+                    <input type="range" min="5" max="100" name="results" class="form-range" value="5">
+                </div>
+
+                <button class="btn btn-primary w-100">
+                    Valider
+                </button>
+            </form>
+        </div>
+    </div>
+
+</body>
+
+</html>
