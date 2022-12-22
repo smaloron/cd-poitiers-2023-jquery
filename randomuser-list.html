@@ -13,30 +13,62 @@
     <script>
         const URL = "https://randomuser.me/api?";
 
-        function getUserListFromServer (search) {
-            fetch(URL + search)
-                .then(response => response.json())
-                .then(data => console.log(data));
-        }
-
         $(document).ready(function () {
-            $("#search").submit(function (ev) {
-                ev.preventDefault();
-                // Récupération de la saisie
-                const formData = $(this).serializeArray();
+            $template = $("#template").clone(true).removeAttr("id");
 
-                // Constitution de la requête
-                // qui doit être transmise au serveur
-                const search = formData.map(item => {
-                    return item.name + "=" + item.value;
-                }).join("&");
+            function normalize (data) {
+                return data.map((item) => {
+                    return {
+                        name: item.name.first + " " + item.name.last.toUpperCase(),
+                        address: item.location.street.number + " " + item.location.street.name + " " + item.location.postcode + " " + item.location.city,
+                        photo: item.picture.large,
+                        email: item.email
+                    }
+                })
+            }
 
-                // Envoie des critères de recherche à une fonction 
-                // chargée d'effectuer l'appel asynchrone
-                getUserListFromServer(search);
+            function showUsers (userList) {
+                const $shadowTbody = $("<tbody></tbody>");
+                for (user of userList) {
+                    $row = $template.clone();
+                    $row.bindTo(user);
+                    $row.find("img").attr("src", user.photo);
 
+                    $shadowTbody.append($row);
+                }
+                $("tbody").replaceWith($shadowTbody);
+            }
+            function getUserListFromServer (search) {
+                fetch(URL + search)
+                    .then(response => response.json())
+                    .then(data => showUsers(normalize(data.results)));
+            }
+
+            $(document).ready(function () {
+                $("#search").submit(function (ev) {
+                    ev.preventDefault();
+                    // Récupération de la saisie
+                    const formData = $(this).serializeArray();
+
+                    // Constitution de la requête
+                    // qui doit être transmise au serveur
+                    const search = formData.map(item => {
+                        return item.name + "=" + item.value;
+                    }).join("&");
+
+                    // Envoie des critères de recherche à une fonction 
+                    // chargée d'effectuer l'appel asynchrone
+                    getUserListFromServer(search);
+
+                });
             });
+
         });
+
+
+
+
+
     </script>
 </head>
 
@@ -79,6 +111,29 @@
                     Valider
                 </button>
             </form>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <table class="table table-striped" id="userTable">
+                <thead>
+                    <tr>
+                        <th>Photo</th>
+                        <th>Nom</th>
+                        <th>Adresse</th>
+                        <th>email</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr id="template">
+                        <td><img></td>
+                        <td data-bind-value="name"></td>
+                        <td data-bind-value="address"></td>
+                        <td data-bind-value="email"></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 
