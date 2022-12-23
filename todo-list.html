@@ -34,6 +34,8 @@
             // Cible du DOM
             $container = $("#taskContainer");
             $template = $("#template").clone(true).removeAttr("id");
+            $formTitle = $("#formTitle");
+            let taskId = null;
 
             async function showTaskList () {
                 const data = await getTaskData(URL);
@@ -54,23 +56,44 @@
 
             });
 
+            $container.delegate(".update", "click", function () {
+                taskId = $(this).parent().data("id");
+                const taskName = $(this).prevAll("h3").text();
+                $("#taskName").val(taskName);
+                $formTitle.text("Modification d'une tâche");
+            });
+
             $("form").submit(async function (ev) {
                 ev.preventDefault();
                 const taskName = $("#taskName").val();
-                console.log(taskName);
+
 
                 if (taskName) {
-                    await fetch(URL, {
-                        method: "POST",
+                    const id = taskId || "";
+                    await fetch(URL + id, {
+                        method: taskId ? "PUT" : "POST",
                         body: JSON.stringify({ taskName: taskName }),
                         headers: {
                             "Content-type": "application/json; charset=UTF-8"
                         }
                     });
 
+                    // Remise à zéro du formulaire
+                    taskId = null;
+                    $formTitle.text("Ajout d'une tâche");
+                    $("form").trigger("reset");
+
+                    console.log(taskId);
+
                     showTaskList();
                 }
-            })
+            });
+
+            $("button[type='reset']").click(function () {
+                // Remise à zéro du formulaire
+                taskId = null;
+                $formTitle.text("Ajout d'une tâche");
+            });
 
             showTaskList();
         });
@@ -81,13 +104,15 @@
 
     <div class="row justify-content-center">
         <div class="col-md-6">
-            <div class="mb-4">
+            <div class="mb-4 p-3">
+                <h3 id="formTitle">Ajout d'une tâche</h3>
                 <form>
                     <div class="mb-2">
                         <label class="form-label">Tâche</label>
                         <input type="text" name="taskName" class="form-control" id="taskName">
                     </div>
                     <button class="btn btn-primary">Valider</button>
+                    <button type="reset" class="btn btn-primary">Annuler</button>
                 </form>
             </div>
             <hr>
