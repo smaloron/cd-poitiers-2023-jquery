@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        const URL = "https://randomuser.me/api";
+        function classicAsync () {
+            fetch(URL)
+                .then(response => response.json())
+                .then(data => console.log(data))
+                .catch(err => console.log(err));
+
+            console.log("FIN DU TRAITEMENT");
+        }
+
+        async function awaitAsync () {
+            try {
+                const response = await fetch("hptt://randomuser.me");
+                const data = await response.json();
+                console.log(data);
+                console.log("FIN DU TRAITEMENT");
+            } catch (err) {
+                console.error("Il y a une erreur");
+            }
+        }
+
+        awaitAsync();
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>

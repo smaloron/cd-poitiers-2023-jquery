@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SWAPI</title>
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+
+    <script>
+
+        $(document).ready(function () {
+            const URL = "http://swapi.dev/api/people/";
+            let prevLink = null;
+            let nextLink = null;
+
+            async function getHomeWorld (url) {
+                // Récupération des données depuis l'API
+                const response = await fetch(url);
+                const data = await response.json();
+                return data.name;
+            }
+
+            async function getData (url) {
+                // Récupération des données depuis l'API
+                const response = await fetch(url);
+                const data = await response.json();
+
+                // stockage des liens vers les autres pages
+                prevLink = data.previous;
+                nextLink = data.next;
+
+                //console.log(data)
+
+                // Affichage des données
+                const $shadowList = $("<ul></ul>");
+                $shadowList.attr("id", "characterList");
+                for (person of data.results) {
+                    const world = await getHomeWorld(person.homeworld);
+                    let item = $(`<li> ${person.name} (${world})  </li>`);
+                    $shadowList.append(item);
+                }
+                $("#characterList").replaceWith($shadowList);
+
+                // Gestion des boutons
+                $("#prevButton").prop("disabled", prevLink == null);
+                $("#nextButton").prop("disabled", nextLink == null);
+
+            }
+
+            $("#prevButton").click(function () {
+                getData(prevLink);
+            });
+
+            $("#nextButton").click(function () {
+                getData(nextLink);
+            });
+
+            getData(URL);
+        });
+
+    </script>
+</head>
+
+<body>
+
+    <ul id="characterList">
+
+    </ul>
+
+    <button class="btn btn-warning" id="prevButton">
+        <<< </button> <button class="btn btn-warning" id="nextButton"> >>> </button>
+
+</body>
+
+</html>
