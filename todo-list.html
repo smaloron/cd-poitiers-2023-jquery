@@ -52,6 +52,24 @@
                 const response = fetch(URL + id, { method: "DELETE" })
                     .then(() => showTaskList());
 
+            });
+
+            $("form").submit(async function (ev) {
+                ev.preventDefault();
+                const taskName = $("#taskName").val();
+                console.log(taskName);
+
+                if (taskName) {
+                    await fetch(URL, {
+                        method: "POST",
+                        body: JSON.stringify({ taskName: taskName }),
+                        headers: {
+                            "Content-type": "application/json; charset=UTF-8"
+                        }
+                    });
+
+                    showTaskList();
+                }
             })
 
             showTaskList();
