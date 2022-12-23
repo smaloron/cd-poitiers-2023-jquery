@@ -9,6 +9,54 @@
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
     <script src="lib/bind-to.js"></script>
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <style>
+        #template {
+            display: none !important
+        }
+    </style>
+    <script>
+        const URL = "http://localhost:3000/tasks/";
+
+        /**
+         * Fonction qui interroge le serveur
+         * et retourne les données de la requête
+         */
+        async function getTaskData (url) {
+            const response = await fetch(url);
+            const data = await response.json();
+            console.log(data);
+            return data;
+        }
+
+
+
+        $(document).ready(function () {
+            // Cible du DOM
+            $container = $("#taskContainer");
+            $template = $("#template").clone(true).removeAttr("id");
+
+            async function showTaskList () {
+                const data = await getTaskData(URL);
+                // Efface les données affichées précédemment
+                $container.html("");
+                for (task of data) {
+                    $row = $template.clone(true);
+                    $row.data("id", task.id);
+                    $row.find("h3").text(task.taskName);
+                    $container.append($row);
+                }
+            }
+
+            $container.delegate(".delete", "click", function () {
+                const id = $(this).parent().data("id");
+                const response = fetch(URL + id, { method: "DELETE" })
+                    .then(() => showTaskList());
+
+            })
+
+            showTaskList();
+        });
+    </script>
 </head>
 
 <body class="container-md">
@@ -19,7 +67,7 @@
                 <form>
                     <div class="mb-2">
                         <label class="form-label">Tâche</label>
-                        <input type="text" name="taskName" class="form-control">
+                        <input type="text" name="taskName" class="form-control" id="taskName">
                     </div>
                     <button class="btn btn-primary">Valider</button>
                 </form>
@@ -31,7 +79,6 @@
                     <button class="ms-2 btn btn-danger delete">Supprimer</button>
                     <button class="ms-2 btn btn-warning update">Modifier</button>
                 </div>
-
             </div>
         </div>
     </div>
