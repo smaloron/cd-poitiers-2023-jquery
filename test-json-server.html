@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Json Server</title>
+
+    <script>
+        const URL = "http://localhost:3000/tasks/";
+
+        function deleteTask (id) {
+            fetch(URL + id, { method: "DELETE" })
+                .then(response => console.log(response))
+        }
+
+        deleteTask(1);
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>
