@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select2</title>
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="node_modules/select2/dist/js/select2.full.min.js"></script>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="node_modules/select2/dist/css/select2.min.css">
+
+    <script>
+        const languageList = [
+            { id: 1, text: 'Java' },
+            { id: 2, text: 'Javascript' },
+            { id: 3, text: 'Scala' },
+            { id: 4, text: 'Haskell' },
+            { id: 5, text: 'Go' },
+            { id: 6, text: 'J++' },
+            { id: 7, text: 'CoffeeScript' },
+            { id: 8, text: 'TypeScript' },
+        ];
+        $(document).ready(function () {
+            $("#countries").select2();
+
+            $("#languages").select2({ data: languageList })
+        })
+    </script>
+
+</head>
+
+<body class="p-5">
+
+    <div>
+        <select id="countries">
+            <option>France</option>
+            <option>Espagne</option>
+            <option>Allemagne</option>
+            <option>Italie</option>
+            <option>Israel</option>
+            <option>Irlande</option>
+        </select>
+    </div>
+
+    <div>
+        <select id="languages" class="w-100"></select>
+    </div>
+
+
+</body>
+
+</html>

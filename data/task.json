@@ -1,24 +1,12 @@
 {
   "tasks": [
     {
-      "taskName": "Corriger les exos",
-      "id": 3
+      "id": 1,
+      "taskName": "test 1"
     },
     {
-      "taskName": "test de modif",
-      "id": 4
-    },
-    {
-      "taskName": "Encore une modif",
-      "id": 5
-    },
-    {
-      "taskName": "Prendre la porte",
-      "id": 6
-    },
-    {
-      "taskName": "zzzz",
-      "id": 7
+      "id": 3,
+      "taskName": "test 3"
     }
   ]
 }
